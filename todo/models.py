@@ -3,12 +3,16 @@ from django.db import models
 from django.core.exceptions import ValidationError
 import datetime
 
+from todo.managers import TodoListManager
+
 # Create your models here.
 
 class TodoList(BaseModel):
     user = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     due_date = models.DateField(null=True, blank=True)
     locked = models.BooleanField(default=False)
+
+    objects = TodoListManager()
 
     @property
     def is_overdue(self):
